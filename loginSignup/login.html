@@ -1,0 +1,36 @@
+<head></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Login Form</title>
+</head>
+<body>
+
+         <!-- FORMULAIRE DE CONNEXION -->
+    <div class="card">
+        <h2>Login Form</h2>
+
+            <!-- SE CONNECTER / S'INSCRIRE -->
+        <div class="login_register">
+            <a href="./login.html" class="login" target="blank">Login</a>
+            <a href="./index.html" class="register" target="blank">Signup</a>
+        </div>
+
+        <form class="form">
+            <input type="email" id="email" placeholder="Email Adress" class="email">
+            <input type="password" id="pass" placeholder="password" class="pass">
+        </form>
+
+        <a href="#" class="fp" id="fp">Forgot password?</a>
+
+            <button type="button" id="login_btn" class="login_btn">Login</button>
+
+        <div class="footer_card">
+        <p>Not a member?</p>
+        <a href="./index.html">Signup now</a>
+        </div>
+    </div>
+        <script type="module" src="firebase.js"></script>
+        <script type="module" src="app.js"></script>
+</body>
+</html>
