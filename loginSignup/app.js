@@ -97,7 +97,7 @@ let googleSignup = () => {
       const token = credential.accessToken;
       const user = result.user;
       console.log(user);
-      window.location.href = "./class27/index.html";
+      // window.location.href = "./class27/index.html";
     })
     .catch((error) => {
       const email = error.customData.email;
