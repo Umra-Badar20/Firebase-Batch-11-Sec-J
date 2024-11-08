@@ -12,7 +12,10 @@ import {
   db,
   collection,
   addDoc,
-  getDocs,doc, setDoc
+  getDocs,
+  doc,
+  setDoc,
+  updateDoc,serverTimestamp , arrayUnion, arrayRemove,deleteDoc
 } from "./firebase.js";
 
 let signUp = () => {
@@ -36,25 +39,25 @@ let signUp = () => {
         alert("Account created successfully");
         // window.location.href = "./class27/index.html"
         // ________________________________Add Doc
-      //   try {
-      //     const docRef = await addDoc(collection(db, "users"), {
-      //       ...userData,
-      //       uId: user.uid,
-      //     });
-      //     console.log("Document written with ID: ", docRef.id);
-      //   } catch (e) {
-      //     console.error("Error adding document: ", e);
-      //   }
-      // ____________________________________Set Doc
-      try {
-        await setDoc(doc(db,"users",user.uid), {
-          ...userData,
-          uId: user.uid
-        });
-            console.log("Document written with ID: ", user.uid);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
+        //   try {
+        //     const docRef = await addDoc(collection(db, "users"), {
+        //       ...userData,
+        //       uId: user.uid,
+        //     });
+        //     console.log("Document written with ID: ", docRef.id);
+        //   } catch (e) {
+        //     console.error("Error adding document: ", e);
+        //   }
+        // ____________________________________Set Doc
+        try {
+          await setDoc(doc(db, "users", user.uid), {
+            ...userData,
+            uId: user.uid,
+          });
+          console.log("Document written with ID: ", user.uid);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
       })
       .catch((error) => {
         console.log(error.message);
@@ -67,10 +70,10 @@ let signUp = () => {
     alert("Passwords should be identical");
   }
 };
-if (window.location.pathname == "/loginSignup/index.html") {
+// if (window.location.pathname == "/loginSignup/index.html") {
   let signUp_btn = document.getElementById("signUp_btn");
   signUp_btn.addEventListener("click", signUp);
-}
+// }
 let logIn = () => {
   let email = document.getElementById("email").value;
   let password = document.getElementById("pass").value;
@@ -120,7 +123,44 @@ if (window.location.pathname == "/loginSignup/index.html") {
 let getAllUsers = async () => {
   const querySnapshot = await getDocs(collection(db, "users"));
   querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => `,doc.data());
+    console.log(`${doc.id} => `, doc.data());
   });
 };
-getAllUsers()
+getAllUsers();
+
+let updateProfile = async () => {
+  // console.log("test");
+  let name = document.getElementById("name").value;
+  let number = document.getElementById("number").value;
+  console.log(auth.currentUser.uid);
+  let id = auth.currentUser.uid;
+  try {
+    const washingtonRef = doc(db, "users", id);
+    await updateDoc(washingtonRef, 
+      {name,
+      number,
+      timestamp: serverTimestamp(), 
+      class:"10th",
+      subjects: ["Eng", "Math", "Sci"],
+      subjects: arrayUnion("Urdu"),
+      subjects:arrayRemove("Math")
+    }
+    );
+    console.log("Updated");
+    
+  } catch (e) {
+    console.log(e);
+  }
+};
+let update_btn = document.querySelector("#update_btn");
+update_btn.addEventListener("click", updateProfile);
+
+
+let deleteAccount=async()=>{
+  let id = auth.currentUser.uid
+  console.log(id);
+  await deleteDoc(doc(db, "users", id));
+  console.log("Account Deleted");
+}
+let delete_btn = document.getElementById("delete_btn")
+delete_btn.addEventListener("click", deleteAccount)
