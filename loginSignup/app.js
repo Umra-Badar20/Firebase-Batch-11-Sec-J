@@ -92,12 +92,29 @@ if (window.location.pathname == "/loginSignup/login.html") {
 }
 let googleSignup = () => {
   signInWithPopup(auth, provider)
-    .then((result) => {
+    .then(async(result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
       console.log(user);
       // window.location.href = "./class27/index.html";
+<<<<<<< HEAD
+=======
+      try {
+        await setDoc(doc(db, "users", user.uid), {
+          uid:user.uid,
+          name : user.displayName,
+          email : user.email,
+          image : user.photoURL,
+          number : user.phoneNumber
+  
+        });
+          console.log("Document written with ID: ", user.uid);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+  
+>>>>>>> 3deec4f7359c3884f032f967bc28178f93f1f181
     })
     .catch((error) => {
       const email = error.customData.email;
