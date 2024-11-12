@@ -17,6 +17,7 @@ let add_button = document.getElementById("add-button");
 add_button.addEventListener("click", addTodo);
 
 let getTodos = () => {
+//   const q =query(collection(db, "Todos"),orderBy("time","desc"));
   const q =query(collection(db, "Todos"),orderBy("time","desc"),where("status", "==", "completed"));
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     let todo_list = document.getElementById("todo-list")
@@ -31,7 +32,7 @@ let getTodos = () => {
                     <button class='complete-button'>Complete</button>
                     <button class='delete-button'>Delete</button>
                 </li>`
-                
+                document.getElementById("todo-input").value =""
     });
   });
 };
